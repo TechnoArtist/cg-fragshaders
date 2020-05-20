@@ -38,4 +38,5 @@ sobel_v = bottom_left + (2.0 * bottom_center) + bottom_right - top_left - (2.0 *
 The Sobel edge values can then be computed using the distance formula with the horizontal and vertical gradients
 sobel_edge = sqrt(sobel_h2 + sobel_v2)
 If the magnitude of the sobel edge vector is greater than or equal to 0.5, then make pixel black, otherwise make pixel normal color from the texture
+
 Note: all modifications will be in the frag shader files.
