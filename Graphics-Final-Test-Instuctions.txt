@@ -1,0 +1,41 @@
+Your objective for this portion of the take-home exam is to implement some fun (non-photo realistic) rendering techniques using the fragment shader. Given a texture, please implement the following filters using GLSL:
+
+Black and White
+Luminance is calculated as L = 0.299 * Red + 0.587 * Green + 0.114 * Blue
+Black and white images are created by assigning the luminance value to all 3 color components
+
+Fish Eye
+This optical effect can be accomplished with a barrel distortion
+In order to accomplish a barrel distortion, implement the following equations:
+scale and translate the texture coordinate such that it is in the range [-1.0, 1.0]
+multiply by 2, then subtract 1
+calculate 𝜽 = arctan(texture_coordinate_y, texture_coordinate_x)
+calculate radius = magnitude of texture coordinate, raised to the power of 1.5
+calculate final texture coordinate = (radius * cos(𝜽),  radius * sin(𝜽))
+
+Ripple
+This filter creates a ripple effect similar to dropping a pebble in a pond
+In order to accomplish a ripple effect, implement the following equations:
+scale and translate the texture coordinate such that it is in the range [-1.0, 1.0]
+multiply by 2, then subtract 1
+calculate radius = magnitude of texture coordinate
+calculate a texture coordinate offset = texture_coordinate * (sin(radius * 30.0 - time * 5.0) + 0.5) / 60.0
+calculate final texture coordinate = original_texture_coordinate + texture_coordinate_offset
+
+Toonify
+This filter will round each color component to one of 5 levels (0.0, 0.25, 0.5, 0.75, 1.0)
+Rounding can be done by multiplying by 4.0, then rounding, then dividing by 4.0
+The result should be a cartoon-ish looking image
+
+Edge Detection
+Implement the Sobel edge detection algorithm
+Retrieve color values for all texels surrounding current texel (RGB only)
+Sample 1.0 / texture_width left and right, 1.0 / texture_height down and up
+Compute horizontal gradient as follows:
+sobel_h = bottom_right + (2.0 * center_right) + top_right - bottom_left - (2.0 * center_left) - top_left
+Compute vertical gradient as follows:
+sobel_v = bottom_left + (2.0 * bottom_center) + bottom_right - top_left - (2.0 * top_center) - top_right
+The Sobel edge values can then be computed using the distance formula with the horizontal and vertical gradients
+sobel_edge = sqrt(sobel_h2 + sobel_v2)
+If the magnitude of the sobel edge vector is greater than or equal to 0.5, then make pixel black, otherwise make pixel normal color from the texture
+Note: all modifications will be in the frag shader files.
