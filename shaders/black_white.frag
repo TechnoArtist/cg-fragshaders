@@ -17,5 +17,4 @@ void main() {
     vec4 colors = texture(image, texcoord); 
     float luminance = 0.299 * colors.x + 0.587 * colors.y + 0.114 * colors.z; 
     FragColor = vec4(luminance, luminance, luminance, colors.w); 
-    //FragColor = texture(image, texcoord);
 }
