@@ -31,10 +31,13 @@ void main() {
         P.x += 0.5
         P.y += 0.5
     */
-    float scale = max(texcoord.x, texcoord.y); 
-    float translate = abs(texcoord.x - texcoord.y); 
+    //float scale = min(texcoord.x, texcoord.y); 
+    //float translate = (texcoord.x - texcoord.y) / 2.0; 
     
-    vec2 transformation = (texcoord - translate) * scale; 
+    //TODO Scale and translate by window size instead of trying to get something out of a single texel? 
+    
+    //vec2 transformation = texcoord * scale - translate; 
+    vec2 transformation = texcoord; 
     transformation = transformation * 2.0 - 1.0; 
     
     float theta = atan(transformation.y, transformation.x); 

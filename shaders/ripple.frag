@@ -20,5 +20,12 @@ uniform sampler2D image;
 out vec4 FragColor;
 
 void main() {
-    FragColor = texture(image, texcoord);
+    //TODO one more transform step at the beginning, as in Fish Eye
+    vec2 transform = texcoord; 
+    transform = (transform * 2.0) - 1.0; 
+    
+    float radius = pow(sqrt(pow(transformation.x, 2.0) + pow(transformation.y, 2.0)), 1.5); 
+    vec2 offset = texcoord * (sin(radius * 30.0 - time * 5.0) + 0.5) / 60.0; 
+    
+    FragColor = texture(image, transform + offset);
 }
