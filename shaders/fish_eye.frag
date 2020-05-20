@@ -19,6 +19,18 @@ uniform sampler2D image;
 out vec4 FragColor;
 
 void main() {
+    /*
+    Center the data on the origin:
+        P.x -= (maxX + minX) / 2
+        P.y -= (maxY + minY) / 2
+    Scale it down by the same amount in both dimensions, such that the larger of the two ranges becomes (-0.5, 0.5):
+        scale = max(maxX - minX, maxY - minY)
+        P.x /= scale
+        P.y /= scale
+    Translate the points by (0.5, 0.5) to bring everything where you want it:
+        P.x += 0.5
+        P.y += 0.5
+    */
     float scale = max(texcoord.x, texcoord.y); 
     float translate = abs(texcoord.x - texcoord.y); 
     
